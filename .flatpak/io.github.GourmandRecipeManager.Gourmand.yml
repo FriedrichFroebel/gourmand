@@ -16,6 +16,7 @@ modules:
       - -DENABLE_UTILS=OFF
       - -DENABLE_CPP=OFF
       - -DENABLE_QT5=OFF
+      - -DENABLE_QT6=OFF
       - -DENABLE_NSS3=OFF
       - -DENABLE_GPGME=OFF
     sources:
