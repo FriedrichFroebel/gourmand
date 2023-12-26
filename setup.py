@@ -199,7 +199,7 @@ setup(
     ],
     extras_require={
         'epub-export': ['ebooklib==0.17.1'],
-        'pdf-export': ['reportlab==3.5.67'],
+        'pdf-export': ['reportlab<4'],
         'spellcheck': ['pyenchant',
                        'pygtkspellcheck'],
     },
