@@ -12,14 +12,21 @@ on:
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04]
+        python: ['3.8', '3.9', '3.10', '3.11']
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - name: set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: apt update
+        run:
+          sudo apt-get update
       - name: Install Ubuntu dependencies
         run: >
           sudo apt-get update -q && sudo apt-get install
@@ -30,10 +37,10 @@ jobs:
 
       - name: Install build dependencies
         run: |
-          sudo pip3 install --upgrade pip setuptools wheel
+          pip install --upgrade pip setuptools wheel
 
       - name: Install Gourmand
-        run: sudo pip3 install -r development.in
+        run: pip install -r development.in
 
       - name: Test with pytest
         run: LANGUAGE=de_DE.utf-8 xvfb-run -a pytest
