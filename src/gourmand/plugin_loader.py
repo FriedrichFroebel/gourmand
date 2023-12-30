@@ -1,5 +1,4 @@
 import glob
-import importlib.metadata
 import logging
 import os.path
 import sys
@@ -13,6 +12,11 @@ from gourmand.prefs import Prefs
 
 from .defaults.defaults import loc
 from .gdebug import debug
+
+if sys.version_info < (3, 10):
+    from importlib_metadata import entry_points
+else:
+    from importlib.metadata import entry_points
 
 PRE = 0
 POST = 1
@@ -97,9 +101,9 @@ class MasterLoader:
     def load_plugins_from_namespace() -> Dict[str, object]:
         """Look for plugins in the gourmand.plugins namespace."""
         debug('Loading plugins from namespace', 1)
-        exporters = list(importlib.metadata.entry_points(group='gourmand.plugins.exporters'))
-        # file_importers = list(importlib.metadata.entry_points(group='gourmand.plugins.fileimporters'))
-        # web_importers = list(importlib.metadata.entry_points(group='gourmand.plugins.webimporters'))
+        exporters = list(entry_points(group='gourmand.plugins.exporters'))
+        # file_importers = list(entry_points(group='gourmand.plugins.fileimporters'))
+        # web_importers = list(entry_points(group='gourmand.plugins.webimporters'))
 
         ret: Dict[str, object] = {}
         for entrypoint in exporters:
