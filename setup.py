@@ -1,14 +1,12 @@
 import os
 import re
+from logging import INFO
 from pathlib import Path
 from typing import Union
 
-from setuptools import find_packages, setup
+from setuptools import Command, find_packages, setup
 from setuptools.command.develop import develop
 from setuptools.command.sdist import sdist
-
-from distutils.core import Command
-from distutils.log import INFO
 
 from wheel.bdist_wheel import bdist_wheel
 
@@ -190,7 +188,7 @@ setup(
     ],
     install_requires=[
         'beautifulsoup4>=4.10.0',
-        'lxml>=4.6.3',
+        'lxml>=4.6.3,<5',  # Missing 5.0 wheels for now.
         'pillow>=8.3.2',
         'pygobject==3.40.1',
         'sqlalchemy>=1.4.36,<2',
