@@ -1,4 +1,5 @@
 import glob
+import importlib.metadata
 import logging
 import os.path
 import sys
@@ -96,13 +97,16 @@ class MasterLoader:
     def load_plugins_from_namespace() -> Dict[str, object]:
         """Look for plugins in the gourmand.plugins namespace."""
         debug('Loading plugins from namespace', 1)
-        exporters = list(pkg_resources.iter_entry_points('gourmand.plugins.exporters'))
-        file_importers = list(pkg_resources.iter_entry_points('gourmand.plugins.fileimporters'))
-        web_importers = list(pkg_resources.iter_entry_points('gourmand.plugins.webimporters'))
+        exporters = list(importlib.metadata.entry_points('gourmand.plugins.exporters'))
+        # file_importers = list(importlib.metadata.entry_points('gourmand.plugins.fileimporters'))
+        # web_importers = list(importlib.metadata.entry_points('gourmand.plugins.webimporters'))
 
         ret: Dict[str, object] = {}
         for entrypoint in exporters:
             try:
+                # Validate and load.
+                # https://importlib-metadata.readthedocs.io/en/latest/migration.html#pkg-resources-iter-entry-points
+                _ = entrypoint.name
                 plugin = entrypoint.load()
             except BaseException as e:  # ModuleNotFoundError, ImportError, etc.
                 print(f'Could not load plugin {entrypoint}: {e}')
@@ -244,6 +248,8 @@ class Plugin:
         self.api_version = 2.0
         self.copyright = plugin_class.COPYRIGHT
         self.website = plugin_class.WEBSITE
+        # TODO: Not compatible with `importlib.metadata` any more.
+        #       https://importlib-metadata.readthedocs.io/en/latest/migration.html#pkg-resources-require
         attrs = pkg_resources.require(self.name)[0]
         self.version = attrs.version
 
