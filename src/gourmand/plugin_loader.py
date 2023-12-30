@@ -97,9 +97,9 @@ class MasterLoader:
     def load_plugins_from_namespace() -> Dict[str, object]:
         """Look for plugins in the gourmand.plugins namespace."""
         debug('Loading plugins from namespace', 1)
-        exporters = list(importlib.metadata.entry_points('gourmand.plugins.exporters'))
-        # file_importers = list(importlib.metadata.entry_points('gourmand.plugins.fileimporters'))
-        # web_importers = list(importlib.metadata.entry_points('gourmand.plugins.webimporters'))
+        exporters = list(importlib.metadata.entry_points(group='gourmand.plugins.exporters'))
+        # file_importers = list(importlib.metadata.entry_points(group='gourmand.plugins.fileimporters'))
+        # web_importers = list(importlib.metadata.entry_points(group='gourmand.plugins.webimporters'))
 
         ret: Dict[str, object] = {}
         for entrypoint in exporters:
