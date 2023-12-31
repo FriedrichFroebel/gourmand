@@ -20,6 +20,7 @@ jobs:
         python3-gi-cairo gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
         intltool enchant-2 python3-enchant gir1.2-poppler-0.18 python3-gst-1.0
         python3-testresources imagemagick
+        libfuse2
 
     - name: Setup AppImage Environment
       run: |
