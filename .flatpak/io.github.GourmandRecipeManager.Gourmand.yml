@@ -1,6 +1,6 @@
 app-id: io.github.GourmandRecipeManager.Gourmand
 runtime: org.gnome.Platform
-runtime-version: '44'
+runtime-version: '45'
 sdk: org.gnome.Sdk
 command: gourmand
 
@@ -25,6 +25,9 @@ modules:
         sha256: beba398c9d37a9b6d02486496635e08f1df3d437cfe61dab2593f47c4d14cdbb
         type: archive
 
+  # Python 3.11 seems to download too old dependency versions and non-wheels of `reportlab` and `lxml`.
+  # This breaks the build itself.
+  # Python 3.12 does not work due to using old SQLAlchemy and possible the `pkg_resources` API for now.
   - name: cpython
     sources:
       - type: archive
